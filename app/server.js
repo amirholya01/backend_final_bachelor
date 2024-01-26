@@ -4,6 +4,7 @@
  */
 const morgan = require("morgan");
 const createError = require("http-errors");
+const { AllRoutes } = require("./router/router");
 
 module.exports =  class Application{
     
@@ -53,7 +54,9 @@ module.exports =  class Application{
         })
     }
 
-    createRoute(){}
+    createRoute(){
+        this.#app.use(AllRoutes);
+    }
 
 
         
