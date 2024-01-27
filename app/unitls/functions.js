@@ -14,7 +14,7 @@ function signAccessToken(userId){
     return new Promise(async(resolve, reject) => {
         const user = await UserModel.findById(userId);
         const payload = {
-            userId : user._id,
+            // userId : user._id,
             username : user.username 
         };
         const secret = "";
