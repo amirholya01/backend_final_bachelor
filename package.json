@@ -9,7 +9,9 @@
     "mongodb": "4.1",
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "name": "backend-final-bachelor",
   "version": "1.0.0",
