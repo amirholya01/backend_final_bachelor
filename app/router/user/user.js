@@ -15,7 +15,7 @@ const router = require("express").Router();
  *  /user/register:
  *      post:
  *          summary: register user
- *          tags:
+ *          tags: [Authentication]
  *          parameters:
  *          -   name: username
  *              description: The username must be at least 3 characters
@@ -56,7 +56,7 @@ router.post("/register", UserAuthController.register);
  *  /user/login:
  *      post:
  *          summary: login user
- *          tags:
+ *          tags: [Authentication]
  *          parameters:
  *          -   name: username
  *              description: The username must be at least 3 characters

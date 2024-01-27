@@ -1,7 +1,7 @@
 const Controller = require("../../controller");
 const {validationResult} = require("express-validator");
 const {UserModel} = require("../../../models/users");
-const {hashString} = require("../../../unitls/functions");
+const {hashString, signAccessToken} = require("../../../unitls/functions");
 const bcrypt = require("bcrypt");
 class UserAuthController extends Controller{
     async register(req, res, next){
@@ -48,6 +48,10 @@ class UserAuthController extends Controller{
             // If the passwords don't match, throw an error
             if(!compareResult) throw {status : 401, message : "The username or password is incorrect"}
             
+
+            const accessToken = await signAccessToken(user._id); 
+
+            user.token = accessToken
             // Save the token to the user's record in the database
             await user.save()
 
@@ -56,7 +60,7 @@ class UserAuthController extends Controller{
                 status: 200,
                 success: true,
                 message: "You have successfully logged in to your account.",
-                
+                accessToken
             })
         } catch (error) {
             next(error);
