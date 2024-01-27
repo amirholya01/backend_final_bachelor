@@ -77,7 +77,7 @@ module.exports =  class Application{
             // Handle Internal server errors
             const statusCode = error?.status || internalServerError.statusCode;
             const message = error?.message || internalServerError.message;
-            return res.status(status).json({
+            return res.status(statusCode).json({
                 statusCode,
                 success : false,
                 message
