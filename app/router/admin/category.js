@@ -1,5 +1,9 @@
-const { CategoryController } = require("../../controllers/admin/category.controller");
-const { addCategoryValidation } = require("../../validations/admin/category.schema");
+const {
+  CategoryController,
+} = require("../../controllers/admin/category.controller");
+const {
+  addCategoryValidation,
+} = require("../../validations/admin/category.schema");
 
 const router = require("express").Router();
 
@@ -20,12 +24,69 @@ const router = require("express").Router();
  *          type: string
  *          required: false
  *      responses:
- *          201: 
+ *          201:
  *              description: success
  */
 
-router.post("/add",  CategoryController.addCategory);
+router.post("/add", CategoryController.addCategory);
 
+/**
+ * @swagger
+ * /admin/category/all:
+ *  get:
+ *      tags: [admin-panel]
+ *      summary: get all categories
+ *      responses:
+ *          200:
+ *              description: success
+ */
+router.get("/all", CategoryController.getAllCategory);
+
+/**
+ * @swagger
+ * /admin/category/parents:
+ *  get:
+ *      tags: [admin-panel]
+ *      summary: get all parents or show all header of categories
+ *      responses:
+ *          200:
+ *              description: success
+ */
+router.get("/parents", CategoryController.getAllParents);
+
+/**
+ * @swagger
+ * /admin/category/children/{parent}:
+ *  get:
+ *      tags: [admin-panel]
+ *      summary: get children of a special parent ---- A subset of a parent
+ *      parameters:
+ *      -   in: path
+ *          name: parent
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *              description: success
+ */
+router.get("/children/:parent",CategoryController.getChildOfParent);
+
+/**
+ * @swagger
+ * /admin/category/remove/{id}:
+ *  delete:
+ *      tags: [admin-panel]
+ *      summary: remove a category with id(object-id)
+ *      parameters:
+ *      -   in: path
+ *          name: id
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *              description: success
+ */
+router.delete("/remove/:id", CategoryController.removeCategory);
 module.exports = {
-    CategoryRoutes : router
-}
+  CategoryRoutes: router,
+};
