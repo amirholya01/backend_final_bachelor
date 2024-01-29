@@ -1,4 +1,5 @@
 const { CategoryController } = require("../../controllers/admin/category.controller");
+const { addCategoryValidation } = require("../../validations/admin/category.schema");
 
 const router = require("express").Router();
 
@@ -23,7 +24,7 @@ const router = require("express").Router();
  *              description: success
  */
 
-router.post("/add", CategoryController.addCategory);
+router.post("/add",  CategoryController.addCategory);
 
 module.exports = {
     CategoryRoutes : router

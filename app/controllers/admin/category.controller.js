@@ -1,5 +1,6 @@
 const { CategoryModel } = require("../../models/categories");
 const { addCategorySchema } = require("../../validations/admin/category.schema");
+
 const Controller = require("../controller");
 const createError = require("http-errors");
 
@@ -7,7 +8,9 @@ class CategoryController extends Controller{
 
     async addCategory(req, res, next){
         try {
-            await addCategorySchema.validateAsync(req.body);
+            // const error = validationResult(req);
+            // if(error) throw createError.InternalServerError("Server Error-validation")
+             await addCategorySchema.validateAsync(req.body);
             const {title, parent} = req.body;
             const category = await CategoryModel.create({title, parent});
             if(!category) throw createError.InternalServerError("Server Error");
