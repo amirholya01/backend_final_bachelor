@@ -42,6 +42,21 @@ router.post("/add", CategoryController.addCategory);
  */
 router.get("/all", CategoryController.getAllCategory);
 
+
+
+/**
+ * @swagger
+ * /admin/category/list-of-all:
+ *  get:
+ *      tags: [admin-panel]
+ *      summary: get all categories without populate
+ *      responses:
+ *          200:
+ *              description: success
+ */
+router.get("/list-of-all", CategoryController.getAllCategoryWithoutPopulate);
+
+
 // /**
 //  * @swagger
 //  * /admin/category/{id}:
@@ -107,6 +122,8 @@ router.get("/children/:parent",CategoryController.getChildOfParent);
  *              description: success
  */
 router.delete("/remove/:id", CategoryController.removeCategory);
+
+
 module.exports = {
   CategoryRoutes: router,
 };

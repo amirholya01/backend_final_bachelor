@@ -84,35 +84,36 @@ class CategoryController extends Controller{
             //         }
             //     }
             // ])
-            const category = await CategoryModel.aggregate([
-                {
-                    $graphLookup: {
-                        from: "categories",
-                        startWith: "$_id",
-                        connectFromField: "_id",
-                        connectToField: "parent",
-                        maxDepth: 5,
-                        depthField: "depth",
-                        as: "children"
-                    }
-                },
-                {
-                    $project: {
-                        __v: 0,
-                        "children.__v": 0,
-                        "children.parent": 0
-                    }
-                },
-                {
-                    $match: {
-                        parent : undefined
-                    }
-                }
-            ])
+            // const categories = await CategoryModel.aggregate([
+            //     {
+            //         $graphLookup: {
+            //             from: "categories",
+            //             startWith: "$_id",
+            //             connectFromField: "_id",
+            //             connectToField: "parent",
+            //             maxDepth: 5,
+            //             depthField: "depth",
+            //             as: "children"
+            //         }
+            //     },
+            //     {
+            //         $project: {
+            //             __v: 0,
+            //             "children.__v": 0,
+            //             "children.parent": 0
+            //         }
+            //     },
+            //     {
+            //         $match: {
+            //             parent : undefined
+            //         }
+            //     }
+            // ])
+            const categories = await CategoryModel.find({parent: undefined}, {__v: 0});
             return res.status(200).json({
                 data: {
                     statusCode: 200,
-                    category
+                    categories
                 }
             })
         } catch (error) {
@@ -174,7 +175,32 @@ class CategoryController extends Controller{
         }
     }
 
-    
+
+    async getAllCategoryWithoutPopulate(req, res, next)
+    {
+        try {
+            const categories = await CategoryModel.aggregate([
+                {$match: {}}
+            ]);
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    categories
+                }
+            })
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
+    async editCategory(req, res, next){
+        try {
+            
+        } catch (error) {
+            next(error);
+        }
+    }
     async checkExistCategory(id){
         const category = await CategoryModel.findById(id);
         if(!category) throw createError.NotFound("The category was not found");
