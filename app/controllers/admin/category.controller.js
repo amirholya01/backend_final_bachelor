@@ -3,6 +3,7 @@ const { addCategorySchema } = require("../../validations/admin/category.schema")
 
 const Controller = require("../controller");
 const createError = require("http-errors");
+const mongoose = require("mongoose");
 
 class CategoryController extends Controller{
 
@@ -25,14 +26,73 @@ class CategoryController extends Controller{
         }
     }
 
+    // async getCategoryById(req, res, next){
+    //     try {
+    //         const {id : _id} = req.params;
+    //         const category = await CategoryModel.aggregate([
+    //             {
+    //                 $match: { _id : mongoose.Types.ObjectId(_id)}
+    //             },
+    //             {
+    //                 $lookup: {
+    //                     from: "categories",
+    //                     localField: "_id",
+    //                     foreignField: "parent",
+    //                     as: "children"
+    //                 }
+    //             },
+    //             {
+    //                 $project: {
+    //                     __v: 0,
+    //                     "children.__v": 0,
+    //                     "children.parent": 0
+    //                 }
+    //             }
+               
+    //         ])
+    //         return res.status(200).json({
+    //             data: {
+    //                 statusCode: 200,
+    //                 category
+    //             }
+    //         })
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // }
     async getAllCategory(req, res, next){
         try {
+            // const category = await CategoryModel.aggregate([
+            //     {
+            //         $lookup: {
+            //             from: "categories",
+            //             localField: "_id",
+            //             foreignField: "parent",
+            //             as: "children"
+            //         }
+            //     },
+            //     {
+            //         $project: {
+            //             __v: 0,
+            //             "children.__v": 0,
+            //             "children.parent": 0
+            //         }
+            //     },
+            //     {
+            //         $match: {
+            //             parent : undefined
+            //         }
+            //     }
+            // ])
             const category = await CategoryModel.aggregate([
                 {
-                    $lookup: {
+                    $graphLookup: {
                         from: "categories",
-                        localField: "_id",
-                        foreignField: "parent",
+                        startWith: "$_id",
+                        connectFromField: "_id",
+                        connectToField: "parent",
+                        maxDepth: 5,
+                        depthField: "depth",
                         as: "children"
                     }
                 },
@@ -41,6 +101,11 @@ class CategoryController extends Controller{
                         __v: 0,
                         "children.__v": 0,
                         "children.parent": 0
+                    }
+                },
+                {
+                    $match: {
+                        parent : undefined
                     }
                 }
             ])
@@ -91,7 +156,12 @@ class CategoryController extends Controller{
         try {
             const {id} = req.params;
             const category = await this.checkExistCategory(id);
-            const deleteResult = await CategoryModel.deleteOne({_id: category._id});
+            const deleteResult = await CategoryModel.deleteMany({
+                $or: [
+                    {_id: category._id},
+                    {parent: category.parent}
+                 ]
+            });
             if(deleteResult.deletedCount == 0) throw createError.InternalServerError("The category was not deleted successfully");
             return res.status(200).json({
                 data: {
@@ -104,6 +174,7 @@ class CategoryController extends Controller{
         }
     }
 
+    
     async checkExistCategory(id){
         const category = await CategoryModel.findById(id);
         if(!category) throw createError.NotFound("The category was not found");

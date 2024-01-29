@@ -42,6 +42,26 @@ router.post("/add", CategoryController.addCategory);
  */
 router.get("/all", CategoryController.getAllCategory);
 
+// /**
+//  * @swagger
+//  * /admin/category/{id}:
+//  *  get:
+//  *      tags: [admin-panel]
+//  *      summary: get category by ID
+//  *      parameters:
+//  *      -   in: path
+//  *          name: id
+//  *          type: string
+//  *          required: true
+//  *      responses:
+//  *          200:
+//  *              description: success
+//  */
+// router.get("/:id", CategoryController.getCategoryById);
+
+
+
+
 /**
  * @swagger
  * /admin/category/parents:
