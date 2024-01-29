@@ -13,7 +13,7 @@ const Schema = new mongoose.Schema({
     bookmark: {type: [mongoose.Types.ObjectId], default: []},
     price: {type: Number, default: 0},
     discount: {type: Number, default: 0},
-    time: {type: String},
+    // time: {type: String},
     format: {type: String},
     teacher: {type: mongoose.Types.ObjectId, required: true}
 })
