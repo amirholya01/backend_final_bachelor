@@ -1,5 +1,5 @@
 const { CategoryModel } = require("../../models/categories");
-const { addCategorySchema } = require("../../validations/admin/category.schema");
+const { addCategorySchema, updateCategorySchema } = require("../../validations/admin/category.schema");
 
 const Controller = require("../controller");
 const createError = require("http-errors");
@@ -194,9 +194,20 @@ class CategoryController extends Controller{
     }
 
 
-    async editCategory(req, res, next){
+    async editCategoryTitle(req, res, next){
         try {
-            
+            const{id} = req.params;
+            const {title} = req.body;
+            const category = await this.checkExistCategory(id);
+            await updateCategorySchema.validateAsync(req.body);
+            const resultOfUpdate = await CategoryModel.updateOne({_id: id}, {$set: {title}});
+            if(resultOfUpdate.modifiedCount == 0) throw createError.InternalServerError("Updating was not done");
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    message: "Updating was done successfully"
+                }
+            })
         } catch (error) {
             next(error);
         }

@@ -5,7 +5,9 @@ const addCategorySchema = Joi.object({
     title: Joi.string().min(2).max(30).error(new Error("The category title is not correct")),
     parent: Joi.string().allow('').pattern(MongoIdPattern).error(new Error("The ID is not correct"))
 })
-
+const updateCategorySchema = Joi.object({
+    title: Joi.string().min(2).max(30).error(new Error("The category title is not correct"))
+})
 //const { MongoIdPattern } = require("../../unitls/constants");
 // const {body} = require("express-validator");
 // const { CategoryModel } = require("../../models/categories");
@@ -34,6 +36,7 @@ const addCategorySchema = Joi.object({
 // }
 
 module.exports = {
-      addCategorySchema
+      addCategorySchema,
+      updateCategorySchema
      //addCategoryValidation
 }

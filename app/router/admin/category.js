@@ -123,6 +123,28 @@ router.get("/children/:parent",CategoryController.getChildOfParent);
  */
 router.delete("/remove/:id", CategoryController.removeCategory);
 
+/**
+ * @swagger
+ * /admin/category/update/{id}:
+ *  patch:
+ *      summary: edit/update category title with object-id
+ *      tags: [admin-panel]
+ *      parameters:
+ *      -   name: id
+ *          required: true
+ *          in: path
+ *          type: string
+ *      -   name: title
+ *          in: formData
+ *          required: true
+ *          type: string
+ *      responses:
+ *          200:
+ *              description: success
+ *          500:
+ *              description: internal server error
+ */
+router.patch("/update/:id", CategoryController.editCategoryTitle);
 
 module.exports = {
   CategoryRoutes: router,
