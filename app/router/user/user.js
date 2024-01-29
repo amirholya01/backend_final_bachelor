@@ -80,6 +80,9 @@ router.post("/register", UserAuthController.register);
  */
 router.post("/login", loginValidation(), UserAuthController.login);
 
+
+router.post("/refresh-token", UserAuthController.refreshToken);
+
 module.exports = {
     UserRoutes : router
 }

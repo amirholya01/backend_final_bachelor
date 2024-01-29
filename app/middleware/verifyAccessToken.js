@@ -13,7 +13,7 @@ function verifyAccessToken(req, res, next){
             // console.log(payload, err);
             const {username} = payload || {}; 
             const user = await UserModel.findOne({username}, {password: 0, token: 0});
-            if(!user) createError.Unauthorized("The user account was not found")
+            if(!user)return next( createError.Unauthorized("The user account was not found"))
             req.user = user;
             return next();
         })
