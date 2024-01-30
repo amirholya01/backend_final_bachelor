@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { type } = require("os");
 
 const Schema = new mongoose.Schema({
     firstName: {type: String},
@@ -8,7 +7,13 @@ const Schema = new mongoose.Schema({
     email: {type: String, required: true, unique: true, lowercase: true},
     password: {type: String, required: true},
     roles: {type: [String], default: ["USER"]},
-    token: {type: String, default: ""}
+    token: {type: String, default: ""},
+    courses: {type: [mongoose.Types.ObjectId], default: [], ref: "course"}
+},{
+    timestamps: true,
+    toJSON: {
+        virtuals: true
+    }
 })
 
 module.exports = {
