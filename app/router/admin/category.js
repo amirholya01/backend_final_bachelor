@@ -147,5 +147,5 @@ router.delete("/remove/:id", CategoryController.removeCategory);
 router.patch("/update/:id", CategoryController.editCategoryTitle);
 
 module.exports = {
-  CategoryRoutes: router,
+  AdminApiCategoryRoutes: router,
 };
