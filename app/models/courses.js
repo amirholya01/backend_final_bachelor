@@ -33,6 +33,7 @@ const CourseSchema = new mongoose.Schema({
     students: {type: [mongoose.Types.ObjectId], ref: "user", default: []}
 })
 
+CourseSchema.index({title: "text", short_text: "text", text: "text"})
 module.exports = {
     CourseModel : mongoose.model("course", CourseSchema)
 }
