@@ -31,6 +31,7 @@ module.exports =  class Application{
         this.#app.use(this.#express.urlencoded({extended : true}));
         this.#app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerJs({
             swaggerDefinition: {
+                openapi:"3.0.0",
                 info: {
                     title: "Backend of final project",
                     version: "1.0.0",
@@ -47,7 +48,9 @@ module.exports =  class Application{
                 ]
             },
             apis: ["app/router/*/*.js"]
-        })))
+        }),
+        { explorer: true}
+        ))
     }
 
      // Method for creating the server
