@@ -15,7 +15,7 @@ const Chapter =  mongoose.Schema({
 
 const CourseSchema = new mongoose.Schema({
     title: {type: String, required: true},
-    short_text: {type: String, required: true},
+    // short_text: {type: String, required: true},
     text: {type: String, required: true},
     image: {type: String, required: true},
     tags: {type: [String], default: []},

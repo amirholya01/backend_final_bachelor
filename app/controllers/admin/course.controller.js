@@ -1,6 +1,7 @@
 const { CourseModel } = require("../../models/courses");
 const Controller = require("../controller");
 const {StatusCodes: HttpStatus} = require("http-status-codes");
+const path = require("path");
 class CourseController extends Controller{
 
     async getListOfCourse(req, res, next){
@@ -22,9 +23,12 @@ class CourseController extends Controller{
         }
     }
 
-    async createCourse(req, res, next){
+    async addCourse(req, res, next){
         try {
-            
+            const{ fileUploadPath, filename} = req.body;
+            const image = path.join(fileUploadPath, filename).replace(/\\/g, "/")
+            const {title, text, tags, category, price, discount} = req.body;
+            return res.status(HttpStatus.CREATED).json({title, text, tags, category, price, discount, image})
         } catch (error) {
             next(error);
         }

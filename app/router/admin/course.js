@@ -180,13 +180,24 @@ router.get("/list", CourseController.getListOfCourse);
 
 /**
  * @swagger
+ *  components:
+ *      schemas:
+ *          Types:
+ *              type: string
+ *              enum:
+ *                  -   free
+ *                  -   cash
+ *                  -   special
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     Insert-Course:
  *       type: object
  *       required:
  *         - title
- *         - short_text
  *         - text
  *         - tags
  *         - category
@@ -198,9 +209,6 @@ router.get("/list", CourseController.getListOfCourse);
  *         title:
  *           type: string
  *           description: The title of the course.
- *         short_text:
- *           type: string
- *           description: The short description about the course.
  *         text:
  *           type: string
  *           description: The description of the course.
@@ -221,8 +229,7 @@ router.get("/list", CourseController.getListOfCourse);
  *           description: The image of the course.
  *           format: binary
  *         type:
- *           type: string
- *           description: The type of course (e.g., free-cash-special).
+ *              $ref: '#/components/schemas/Types'
  */
 
 /**
@@ -243,7 +250,7 @@ router.get("/list", CourseController.getListOfCourse);
  *         description: Success
  */
 
-router.post("/add", uploadFile.single("image"), stringToArray("tags"), CourseController.createCourse);
+router.post("/add", uploadFile.single("image"), stringToArray("tags"), CourseController.addCourse);
 module.exports = {
     AdminApiCourseRoutes : router
 }
