@@ -20,6 +20,8 @@ const router = require("express").Router();
 router.get("/list", CourseController.getListOfCourse);
 
 
+
+
 module.exports = {
     AdminApiCourseRoutes : router
 }
