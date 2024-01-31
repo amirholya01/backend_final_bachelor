@@ -13,6 +13,18 @@ const router = require("express").Router();
  */
 
 router.get("/", BlogController.getListOfBlog);
+
+/**
+ * @swagger
+ * /admin/blog/add:
+ *  post:
+ *      tags: [Blog(Admin-Panel)]
+ *      summary: Create a new blog
+ *      responses:
+ *          201: 
+ *              description: created
+ */
+router.post("/add", BlogController.createBlog);
 module.exports = {
     AdminApiBlogRoutes : router
 }
