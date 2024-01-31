@@ -24,35 +24,59 @@ module.exports =  class Application{
 
     // Method for configuring the application
     configApplication(){
+        const swaggerDefinition = {
+            openapi: "3.0.0",
+            info: {
+                title: "Backend of final project",
+                version: "1.0.0",
+                description: ".........",
+                contact: {
+                    name: "Amir Hossein Olyanasab Narab",
+                    email: "amirholyanasab@gmail.com"
+                }
+            },
+            servers: [
+                {
+                    url: "http://localhost:5000"
+                }
+            ]
+        };
+        
+        const swaggerSpec = swaggerJs({
+            swaggerDefinition,
+            apis: ["app/router/*/*.js"]
+        });
+        
         const path = require("path");
         this.#app.use(morgan("dev"));
         this.#app.use(this.#express.static(path.join(__dirname, "..", "public")))
         this.#app.use(this.#express.json());
         this.#app.use(this.#express.urlencoded({extended : true}));
-        this.#app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerJs({
-            swaggerDefinition: {
-                openapi:"3.0.0",
-                info: {
-                    title: "Backend of final project",
-                    version: "1.0.0",
-                    description: ".........",
-                    contact: {
-                        name: "Amir Hossein Olyanasab Narab",
-                        email: "amirholyanasab@gmail.com"
-                    }
-                },
-                servers:[
-                    {
-                        url: "http://localhost:5000"
-                    }
-                ]
-            },
-            apis: ["app/router/*/*.js"]
-        }),
-        { explorer: true}
-        ))
-    }
-
+        this.#app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
+    //     this.#app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerJs({
+    //         swaggerDefinition: {
+    //             openapi:"3.0.0",
+    //             info: {
+    //                 title: "Backend of final project",
+    //                 version: "1.0.0",
+    //                 description: ".........",
+    //                 contact: {
+    //                     name: "Amir Hossein Olyanasab Narab",
+    //                     email: "amirholyanasab@gmail.com"
+    //                 }
+    //             },
+    //             servers:[
+    //                 {
+    //                     url: "http://localhost:5000"
+    //                 }
+    //             ]
+    //         },
+    //         apis: ["app/router/*/*.js"]
+    //     }),
+    //     { explorer: true}
+    //     ))
+    // }
+     }
      // Method for creating the server
     createServer(PORT){
         const http = require("http");
@@ -63,7 +87,7 @@ module.exports =  class Application{
         });
     }
 
-
+    
     // Method for configuring the database
     connectToMongoDB(DB_HOST){
         const mongoose = require("mongoose");
