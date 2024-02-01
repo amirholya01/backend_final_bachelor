@@ -31,21 +31,24 @@ class CourseController extends Controller{
             await createCourseSchema.validateAsync(req.body);
             const{ fileUploadPath, filename} = req.body;
             const image = path.join(fileUploadPath, filename).replace(/\\/g, "/")
-            const {title, text, tags, category, price, discount} = req.body;
+            const {title, text, tags, category} = req.body;
             const teacher = req.user._id;
             const course = await CourseModel.create({
                 title,
                 text,
                 tags,
                 category,
-                price,
-                discount,
                 image,
                 time: "00.00.00",
                 teacher 
             })
             if(!course?._id) throw createError.InternalServerError("The course was not registered")
-            return res.status(HttpStatus.CREATED).json({})
+            return res.status(HttpStatus.CREATED).json({
+                statusCode : HttpStatus.CREATED,
+                data: {
+                    course
+                }
+            })
         } catch (error) {
             next(error);
         }

@@ -178,17 +178,17 @@ router.get("/list", CourseController.getListOfCourse);
 //  *              description: success
 //  */
 
-/**
- * @swagger
- *  components:
- *      schemas:
- *          Types:
- *              type: string
- *              enum:
- *                  -   free
- *                  -   cash
- *                  -   special
- */
+// /**
+//  * @swagger
+//  *  components:
+//  *      schemas:
+//  *          Types:
+//  *              type: string
+//  *              enum:
+//  *                  -   free
+//  *                  -   cash
+//  *                  -   special
+//  */
 
 /**
  * @swagger
@@ -201,10 +201,7 @@ router.get("/list", CourseController.getListOfCourse);
  *         - text
  *         - tags
  *         - category
- *         - price
- *         - discount
  *         - image
- *         - type
  *       properties:
  *         title:
  *           type: string
@@ -218,18 +215,10 @@ router.get("/list", CourseController.getListOfCourse);
  *         category:
  *           type: string
  *           description: Category of the course (e.g., Mongo ID).
- *         price:
- *           type: string
- *           description: The price of the course.
- *         discount:
- *           type: string
- *           description: The discount for the course.
  *         image:
  *           type: string
  *           description: The image of the course.
  *           format: binary
- *         type:
- *              $ref: '#/components/schemas/Types'
  */
 
 /**

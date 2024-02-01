@@ -120,16 +120,29 @@ module.exports =  class Application{
             })
         });
 
+        // this.#app.use((error, req, res, next) => {
+        //     const internalServerError = createError.InternalServerError; 
+        //     // Handle Internal server errors
+        //     const statusCode = error?.status || internalServerError.statusCode;
+        //     const message = error?.message || internalServerError.message;
+        //     return res.status(statusCode).json({
+        //         statusCode,
+        //         success : false,
+        //         message
+        //     })
+        // })
         this.#app.use((error, req, res, next) => {
-            const internalServerError = createError.InternalServerError; 
+            const internalServerError = createError.InternalServerError;
+    
             // Handle Internal server errors
-            const statusCode = error?.status || internalServerError.statusCode;
-            const message = error?.message || internalServerError.message;
+            const statusCode = error instanceof createError.HttpError ? error.statusCode : internalServerError.statusCode;
+            const message = error instanceof createError.HttpError ? error.message : internalServerError.message;
+    
             return res.status(statusCode).json({
                 statusCode,
-                success : false,
+                success: false,
                 message
-            })
-        })
+            });
+        });
     }
 }
